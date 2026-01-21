@@ -1,0 +1,12 @@
+# randomly generated secret -> bun run test/src/jwt.ts
+JWT_SECRET=""
+
+# discord client oauth2 env variables
+CLIENT_ID=""
+CLIENT_SECRET=""
+
+# optional, only used for Silly service
+CLIENT_TOKEN=""
+
+# optional, only used for debugging
+ADMIN_USER_ID=""

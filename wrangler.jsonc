@@ -1,0 +1,55 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "songspotlight",
+	"main": "src/index.ts",
+	"compatibility_flags": [
+		"nodejs_compat",
+	],
+	"compatibility_date": "2025-09-04",
+	"rules": [
+		{
+			"type": "CompiledWasm",
+			"globs": ["**/*.wasm"],
+			"fallthrough": true,
+		},
+		{
+			"type": "Text",
+			"globs": ["**/*.svg"],
+			"fallthrough": true,
+		},
+	],
+	"unsafe": {
+		"bindings": [
+			// Ratelimit of max 20 requests/10s per user (production)
+			{
+				"name": "USER_RATELIMIT",
+				"type": "ratelimit",
+				"namespace_id": "1001",
+				"simple": {
+					"limit": 20,
+					"period": 10,
+				},
+			},
+		],
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "VendettaSongSpotlight",
+			"database_id": "9fc3167a-9e03-4c02-a66e-08f69ca4516f",
+		},
+	],
+	"define": {
+		"IS_PRODUCTION": "false",
+	},
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+	},
+	"triggers": {
+		"crons": [
+			// the silly service
+			"0 2 * * *",
+		],
+	},
+}
